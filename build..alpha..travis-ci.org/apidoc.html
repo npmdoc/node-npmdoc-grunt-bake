@@ -1,0 +1,333 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/MathiasPaumgarten/grunt-bake"
+
+    >grunt-bake (v1.8.0)</a>
+</h1>
+<h4>Bake external includes into files to create static pages with no server-side compilation time</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-bake">module grunt-bake</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-bake.grunt-bake">
+            function <span class="apidocSignatureSpan"></span>grunt-bake
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-bake" id="apidoc.module.grunt-bake">module grunt-bake</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-bake.grunt-bake" id="apidoc.element.grunt-bake.grunt-bake">
+        function <span class="apidocSignatureSpan"></span>grunt-bake
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">grunt-bake = function (grunt) {
+
+	grunt.initConfig( {
+		jshint: {
+			all: [
+				&#x22;Gruntfile.js&#x22;,
+				&#x22;tasks/*.js&#x22;,
+				&#x22;&#x3c;%= nodeunit.tests %&#x3e;&#x22;,
+			],
+			options: {
+				jshintrc: &#x22;.jshintrc&#x22;,
+			},
+		},
+
+		jsonlint: {
+			config: {
+				src: [ &#x22;package.json&#x22; ]
+			}
+		},
+
+		clean: [ &#x22;tmp&#x22; ],
+
+		nodeunit: {
+			tests: [ &#x22;test/*_test.js&#x22; ],
+		},
+
+		watch: {
+			jshint: {
+				files: [
+					&#x22;Gruntfile.js&#x22;,
+					&#x22;tasks/*.js&#x22;,
+					&#x22;&#x3c;%= nodeunit.tests %&#x3e;&#x22;,
+				],
+				tasks: [ &#x22;jshint&#x22; ]
+			},
+			jsonlint: {
+				files: [ &#x22;package.json&#x22; ],
+				tasks: [ &#x22;jsonlint&#x22; ]
+			},
+			test: {
+				files: [
+					&#x22;tasks/*.js&#x22;,
+					&#x22;&#x3c;%= nodeunit.tests %&#x3e;&#x22;,
+				],
+				tasks: [ &#x22;jshint&#x22;, &#x22;test&#x22; ]
+			}
+		},
+
+		bake: {
+
+			default_bake: {
+				files: {
+					&#x22;tmp/default_bake.html&#x22;: &#x22;test/fixtures/default_bake.html&#x22;
+				},
+			},
+
+			advanced_bake: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;,
+					section: &#x22;en&#x22;
+				},
+
+				files: {
+					&#x22;tmp/advanced_bake.html&#x22;: &#x22;test/fixtures/advanced_bake.html&#x22;
+				}
+			},
+
+			advanced_bake_multi: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;,
+					section: &#x22;en&#x22;
+				},
+
+				files: {
+					&#x22;tmp/advanced_bake_multi_one.html&#x22;: &#x22;test/fixtures/advanced_bake_multi_one.html&#x22;,
+					&#x22;tmp/advanced_bake_multi_two.html&#x22;: &#x22;test/fixtures/advanced_bake_multi_two.html&#x22;
+				}
+			},
+
+			object_bake: {
+				options: {
+					content: {
+						&#x22;title&#x22;: &#x22;A Title&#x22;,
+						&#x22;info&#x22;: {
+							&#x22;author&#x22;: &#x22;Mike&#x22;
+						}
+					}
+				},
+
+				files: {
+					&#x22;tmp/object_bake.html&#x22;: &#x22;test/fixtures/advanced_bake.html&#x22;
+				}
+			},
+
+			costum_process_bake: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;,
+					section: &#x22;de&#x22;,
+					process: parseFunction
+				},
+
+				files: {
+					&#x22;tmp/costum_process_bake.html&#x22;: &#x22;test/fixtures/advanced_bake.html&#x22;
+				}
+			},
+
+			recursive_bake: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;,
+					section: &#x22;en&#x22;,
+				},
+
+				files: {
+					&#x22;tmp/recursive_bake.html&#x22;: &#x22;test/fixtures/recursive_bake.html&#x22;
+				}
+			},
+
+			inline_recursive_bake: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;
+				},
+
+				files: {
+					&#x22;tmp/inline_recursive_bake.html&#x22;: &#x22;test/fixtures/inline_recursive_bake.html&#x22;
+				}
+			},
+
+			inline_bake: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;,
+					section: &#x22;en&#x22;
+				},
+
+				files: {
+					&#x22;tmp/inline_bake.html&#x22;: &#x22;test/fixtures/inline_bake.html&#x22;
+				}
+			},
+
+			absolute_path_bake: {
+				options: {
+					basePath: &#x22;test/fixtures/includes&#x22;
+				},
+
+				files: {
+					&#x22;tmp/absolute_path_bake.html&#x22;: &#x22;test/fixtures/absolute_path_bake.html&#x22;
+				}
+			},
+
+			default_absolute_path_bake: {
+				files: {
+					&#x22;tmp/default_absolute_path_bake.html&#x22;: &#x22;test/fixtures/default_absolute_path_bake.html&#x22;
+				}
+			},
+
+			if_bake: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;,
+					section: &#x22;en&#x22;
+				},
+
+				files: {
+					&#x22;tmp/if_bake.html&#x22;: &#x22;test/fixtures/if_bake.html&#x22;
+				}
+			},
+
+			semantic_if: {
+				options: {
+					semanticIf: true
+				},
+
+				files: {
+					&#x22;tmp/semantic_if.html&#x22;: &#x22;test/fixtures/semantic_if.html&#x22;
+				}
+			},
+
+			format_bake: {
+				files: {
+					&#x22;tmp/format_bake.html&#x22;: &#x22;test/fixtures/format_bake.html&#x22;
+				}
+			},
+
+			foreach_bake: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;,
+					section: &#x22;en&#x22;
+				},
+
+				files: {
+					&#x22;tmp/foreach_bake.html&#x22;: &#x22;test/fixtures/foreach_bake.html&#x22;
+				}
+			},
+
+			foreach_inline_bake: {
+				options: {
+					content: &#x22;test/fixtures/content.json&#x22;,
+					section: &#x22;en&#x22;
+				},
+
+				files: {
+					&#x22;tmp/foreach-inline_bake.html&#x22;: &#x22;test/fixtures/foreach-inline_bake.html&#x22;
+				}
+			},
+
+			foreach_meta: {
+				options: {
+					transforms: {
+						visibleBool: function( state ) {
+							return state ? &#x22;is true&#x22; : &#x22;is false&#x22;;
+						}
+					}
+				},
+				files: {
+					&#x22;tmp/foreach_meta.html&#x22;: &#x22;test/fixtures/foreach_meta.html&#x22;
+				}
+			},
+
+			no_process_bake: {
+				options: {
+					process: false
+				},
+
+				files: {
+					&#x22;tmp/no_process_bake.html&#x22;: &#x22;test/fixtures/no_process_bake.html&#x22;
+				}
+			},
+
+			section_bake: {
+				options: {
+					content: {
+						home: {
+							title: &#x22;Home&#x22;
+						},
+						about: {
+							title: &#x22;About&#x22; ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
